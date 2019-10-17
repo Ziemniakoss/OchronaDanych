@@ -1,6 +1,3 @@
-import math
-
-
 class OccurrenceCalculator:
     def __init__(self, values: list):
         self._dictionary = {}
@@ -13,23 +10,17 @@ class OccurrenceCalculator:
             self._dictionary[value] += 1
             self._total += 1
 
-    def get_dictionary(self) -> dict:
+    def get_occurances(self) -> dict:
         return self._dictionary
 
     def get_total(self) -> int:
         return self._total
 
-    def probability_dic(self) -> dict:
+    def get_probability(self) -> dict:
         probability = {}
         for key in self._dictionary:
             probability[key] = self._dictionary[key] / self._total
         return probability
-
-    def __str__(self) -> str:
-        result = ""
-        for key in self._dictionary:
-            result += "{} <=> {}\n".format(key, self._dictionary[key])
-        return result
 
 
 class Cesar:
@@ -94,50 +85,3 @@ class Vigenere:
             code = ((code2 - code1) % self._delta) + self._start
             decrypted += chr(code)
         return decrypted
-
-
-class RC4:
-    def __init__(self, key: str):
-        self._key = key
-
-    def _generate_key(self):
-        s = [i for i in range(256)]
-        j = 0
-        for i in range(256):
-            j = (j + s[i] + ord(self._key[i % len(self._key)])) % 256
-            s[i], s[j] = s[j], s[i]
-        return s
-
-    def encrypt(self, message: str) -> str:
-        encrypted = ""
-        s = self._generate_key()
-        i, j = 0, 0
-
-        for char in message:
-            i = (i + 1) % 256
-            j = (j + s[i]) % 256
-            s[i], s[j] = s[j], s[i]
-            k = s[(s[i] + s[j]) % 256]
-            encrypted += chr(ord(char) ^ k)
-        return encrypted
-
-
-def entropy(data: bytes) -> float:
-    # calc = OccurrenceCalculator([i for i in range(256)])
-    # for x in data:
-    #     calc.add(x)
-    # prob = calc.probability_dic()
-    # sum = 0
-    # for key in prob:
-    #     print(prob[key])
-    #     sum += prob[key] * prob[key]
-    # return 1 - sum / calc.get_total()
-    count = [0] * 256
-    dataSize = len(data)
-    for b in data: count[b] = count[b] + 1
-
-    entropy = 0
-    for b in range(256):
-        entropy += (count[b] / dataSize) * count[b]
-
-    return 1 - entropy / dataSize
