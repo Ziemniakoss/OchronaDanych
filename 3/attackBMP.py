@@ -50,11 +50,6 @@ def convert_to_RGB(data):
     return pixels
 
 
-def showPicture(size, pixels):
-    image = cv2.CreateImage(img_in.size,
-                            )
-
-
 def brute_attack(cryptogram: bytes, iv: bytes):
     de = 3
     length = 3
