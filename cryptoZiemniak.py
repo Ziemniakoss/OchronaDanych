@@ -1,3 +1,7 @@
+import string
+import random
+
+
 class OccurrenceCalculator:
     def __init__(self, values: list):
         self._dictionary = {}
@@ -85,3 +89,55 @@ class Vigenere:
             code = ((code2 - code1) % self._delta) + self._start
             decrypted += chr(code)
         return decrypted
+
+
+def toCodes(string: str) -> list:
+    result = []
+    for char in string:
+        result.append(ord(char))
+    return result
+
+
+def toString(codes: list) -> str:
+    result: str = ""
+    for code in codes:
+        result += chr(code)
+    return result
+
+
+def randomString(length: int):
+    return "".join(random.sample(string.ascii_letters, length))
+
+
+def passwordGenerator(length: int, characters: str):
+    """
+    Generator wszystkich hasel o podanej długości wykorzystujące podane znaki
+    :param characters: Ciąg znaków zawierający wszystkie możliwe znaki
+    :param length: długość hasła
+    :return:
+    """
+    chars = string.ascii_letters
+    indexes = [0] * length
+    charCount = len(characters)
+    yield characters[0] * length
+
+    while True:
+        # Aktualizuje indexy
+        i = length - 1
+        hasNext = False
+        while i >= 0:
+            if indexes[i] < charCount -1:
+                indexes[i] += 1
+                hasNext = True
+                break
+            else:
+                indexes[i] = 0
+                i -= 1
+
+        if hasNext:
+            result = ""
+            for index in indexes:
+                result += characters[index]
+            yield result
+        else:
+            break

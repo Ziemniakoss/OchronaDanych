@@ -1,6 +1,4 @@
-import time
 from Crypto.Cipher import DES, AES
-from IPython.display import clear_output
 from Crypto.Random import get_random_bytes
 
 password = "key4567890123456"
