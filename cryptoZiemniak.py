@@ -126,7 +126,7 @@ def passwordGenerator(length: int, characters: str):
         i = length - 1
         hasNext = False
         while i >= 0:
-            if indexes[i] < charCount -1:
+            if indexes[i] < charCount - 1:
                 indexes[i] += 1
                 hasNext = True
                 break
@@ -141,3 +141,12 @@ def passwordGenerator(length: int, characters: str):
             yield result
         else:
             break
+
+
+def pad(s, padLen: int, filler=" "):
+    l = len(s)
+    for i in range(0, l, padLen):
+        if i + padLen > l:
+            yield s[i:i + padLen] + (filler * (l - i + 1))
+        else:
+            yield s[i:i + padLen]
