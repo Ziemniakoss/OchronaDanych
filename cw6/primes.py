@@ -45,12 +45,26 @@ def areSemiPrime(a: int, b: int) -> bool:
     return nwd(a, b) == 1
 
 
-text = "ala ma kota"
-print(type(text.encode()))
-print(nwd(1, 1))
-print(nwd(2, 1))
-print(nwd(2, 4))
-print(nwd(4, 8))
-print(nwd(8, 4))
-print(nwd(282, 78))
-print(nwd(78, 282))
+def extendedEuclidean(a: int, b: int) -> dict:
+    s = 0
+    old_s = 1
+    t = 1
+    old_t = 0
+    r = b
+    old_r = a
+    while r != 0:
+        q = old_r // r
+        old_r, r = r, old_r - q * r
+        old_s, s = s, old_s - q * s
+        old_t, t = t, old_t - q * t
+    return {"x": old_s,
+            "y": old_t,
+            "NWD": old_r}
+
+
+def invModulo(n: int, mod: int):
+    x = extendedEuclidean(n, mod)
+    if x["NWD"] != 1:
+        raise Exception("Nie ma")
+    else:
+        return x["x"] % mod
