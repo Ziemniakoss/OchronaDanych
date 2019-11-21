@@ -1,5 +1,5 @@
 code = 1
-length = 8
+length = 9
 password = "a" * length
 f = open("pass", "wb")
 for i in range(length):
